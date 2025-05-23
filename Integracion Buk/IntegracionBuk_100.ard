@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AddOnRegData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" SlientInstallation="No" SlientUpgrade="No" Partnernmsp="EXXIS" SchemaVersion="3.0" Type="" MultipleVersion="false" OnDemand="" OnPremise="" ExtName="IntegracionBuk_100" ExtVersion="1.0.0" Contdata="EXXIS" Partner="EXXIS" DBType="HANA" ClientType="A">
+  <Validity>
+    <SBOCompatibility>
+      <Version From="940.000.000" To="940.999.999" />
+    </SBOCompatibility>
+  </Validity>
+  <Configuration>
+    <Repository>
+      <Properties />
+    </Repository>
+    <Deployment>
+      <Properties />
+    </Deployment>
+    <Assignment>
+      <Properties />
+    </Assignment>
+  </Configuration>
+  <Addons>
+    <Addon Name="IntegracionBuk_100" Group="" ForceFlag="" Visible="" AutoAssign="" SelfUpgrd="">
+      <x86 AddonExe="" AddonSig="">
+        <Installation>
+          <Files />
+        </Installation>
+        <Uninstallation>
+          <Files />
+        </Uninstallation>
+      </x86>
+      <x64 AddonExe="Integracion Buk.exe" AddonSig="569A627791C704187B818BADA2FB9A0E" ExeDir="X64Client">
+        <Installation>
+          <Files>
+            <File FileName="X64Client\Integracion Buk.b1s">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Integracion Buk.exe">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Integracion Buk.exe.config">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Integracion Buk.vshost.exe">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Integracion Buk.vshost.exe.manifest">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Integrar.b1f">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Bcl.AsyncInterfaces.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Bcl.AsyncInterfaces.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Configuration.Abstractions.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Configuration.Abstractions.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Configuration.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Configuration.FileExtensions.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Configuration.FileExtensions.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Configuration.Json.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Configuration.Json.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Configuration.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.FileProviders.Abstractions.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.FileProviders.Abstractions.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.FileProviders.Physical.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.FileProviders.Physical.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.FileSystemGlobbing.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.FileSystemGlobbing.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Primitives.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Primitives.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\SAPBusinessOneSDK.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Buffers.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Buffers.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.IO.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Memory.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Memory.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Numerics.Vectors.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Numerics.Vectors.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Runtime.CompilerServices.Unsafe.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Runtime.CompilerServices.Unsafe.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Runtime.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Security.Cryptography.Algorithms.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Security.Cryptography.Encoding.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Security.Cryptography.Primitives.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Text.Encodings.Web.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Text.Encodings.Web.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Text.Json.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Text.Json.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Threading.Tasks.Extensions.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Threading.Tasks.Extensions.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.ValueTuple.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.ValueTuple.xml">
+              <Actions />
+            </File>
+          </Files>
+        </Installation>
+        <Uninstallation>
+          <Files>
+            <File FileName="X64Client\Integracion Buk.b1s">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Integracion Buk.exe">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Integracion Buk.exe.config">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Integracion Buk.vshost.exe">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Integracion Buk.vshost.exe.manifest">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Integrar.b1f">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Bcl.AsyncInterfaces.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Bcl.AsyncInterfaces.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Configuration.Abstractions.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Configuration.Abstractions.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Configuration.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Configuration.FileExtensions.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Configuration.FileExtensions.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Configuration.Json.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Configuration.Json.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Configuration.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.FileProviders.Abstractions.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.FileProviders.Abstractions.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.FileProviders.Physical.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.FileProviders.Physical.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.FileSystemGlobbing.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.FileSystemGlobbing.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Primitives.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\Microsoft.Extensions.Primitives.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\SAPBusinessOneSDK.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Buffers.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Buffers.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.IO.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Memory.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Memory.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Numerics.Vectors.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Numerics.Vectors.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Runtime.CompilerServices.Unsafe.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Runtime.CompilerServices.Unsafe.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Runtime.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Security.Cryptography.Algorithms.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Security.Cryptography.Encoding.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Security.Cryptography.Primitives.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Text.Encodings.Web.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Text.Encodings.Web.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Text.Json.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Text.Json.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Threading.Tasks.Extensions.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.Threading.Tasks.Extensions.xml">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.ValueTuple.dll">
+              <Actions />
+            </File>
+            <File FileName="X64Client\System.ValueTuple.xml">
+              <Actions />
+            </File>
+          </Files>
+        </Uninstallation>
+      </x64>
+    </Addon>
+  </Addons>
+  <XApps>
+    <XApp Name="" Path="" FileName="" />
+  </XApps>
+  <UDQs>
+    <UDQ udqname="">
+      <Hana FileName="" />
+    </UDQ>
+  </UDQs>
+</AddOnRegData>
