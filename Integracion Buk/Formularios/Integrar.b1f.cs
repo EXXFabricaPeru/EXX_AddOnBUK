@@ -29,7 +29,6 @@ namespace Integracion_Buk
 
         private SAPbouiCOM.Button Button0;
         private SAPbouiCOM.Button Button1;
-        private SAPbouiCOM.EditText EditText0;
         private SAPbouiCOM.EditText EditText1;
         private SAPbouiCOM.StaticText StaticText1;
         private SAPbouiCOM.ComboBox ComboBox1;
@@ -42,17 +41,24 @@ namespace Integracion_Buk
         public override void OnInitializeComponent()
         {
             this.StaticText0 = ((SAPbouiCOM.StaticText)(this.GetItem("Item_0").Specific));
-            this.Button0 = ((SAPbouiCOM.Button)(this.GetItem("1").Specific));
+            this.Button0 = ((SAPbouiCOM.Button)(this.GetItem("btnCrear").Specific));
             this.Button0.ClickAfter += new SAPbouiCOM._IButtonEvents_ClickAfterEventHandler(this.Button0_ClickAfter);
             this.Button1 = ((SAPbouiCOM.Button)(this.GetItem("2").Specific));
-            this.EditText0 = ((SAPbouiCOM.EditText)(this.GetItem("Item_3").Specific));
-            this.EditText0.PressedAfter += new SAPbouiCOM._IEditTextEvents_PressedAfterEventHandler(this.EditText0_PressedAfter);
             this.EditText1 = ((SAPbouiCOM.EditText)(this.GetItem("Item_1").Specific));
             this.EditText1.ChooseFromListAfter += new SAPbouiCOM._IEditTextEvents_ChooseFromListAfterEventHandler(this.EditText1_ChooseFromListAfter);
             this.StaticText1 = ((SAPbouiCOM.StaticText)(this.GetItem("Item_2").Specific));
             this.ComboBox0 = ((SAPbouiCOM.ComboBox)(this.GetItem("cmbBranch").Specific));
             this.EditText2 = ((SAPbouiCOM.EditText)(this.GetItem("Item_4").Specific));
             this.StaticText2 = ((SAPbouiCOM.StaticText)(this.GetItem("Item_5").Specific));
+            this.EditText3 = ((SAPbouiCOM.EditText)(this.GetItem("Item_6").Specific));
+            this.StaticText3 = ((SAPbouiCOM.StaticText)(this.GetItem("Item_7").Specific));
+            this.StaticText4 = ((SAPbouiCOM.StaticText)(this.GetItem("Item_9").Specific));
+            this.periodoEditText = ((SAPbouiCOM.EditText)(this.GetItem("Item_10").Specific));
+            this.periodoEditText.ChooseFromListAfter += new SAPbouiCOM._IEditTextEvents_ChooseFromListAfterEventHandler(this.periodoEditText_ChooseFromListAfter);
+            this.fechaEditText = ((SAPbouiCOM.EditText)(this.GetItem("Item_11").Specific));
+            this.EditText0 = ((SAPbouiCOM.EditText)(this.GetItem("Item_3").Specific));
+            this.LinkedButton0 = ((SAPbouiCOM.LinkedButton)(this.GetItem("Item_8").Specific));
+            this.StaticText5 = ((SAPbouiCOM.StaticText)(this.GetItem("Item_12").Specific));
             this.OnCustomInitialize();
 
         }
@@ -66,43 +72,64 @@ namespace Integracion_Buk
 
         private SAPbouiCOM.StaticText StaticText0;
 
+        private string urlBuk = "";
+        private string tokenBuk = "";
         private void OnCustomInitialize()
         {
             SAPbobsCOM.Recordset oRS = ((SAPbobsCOM.Recordset)Program.oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset));
             string strSQL = "";
-            strSQL = "SELECT \"BPLId\", \"BPLName\" FROM OBPL WHERE \"Disabled\" = 'N' ";
-            oRS.DoQuery(strSQL);
-            //  int control = 0;
-
-            if (ComboBox0.ValidValues.Count > 1)
-            {
-                for (int i = ComboBox0.ValidValues.Count - 1; i == 0; i--)
-                {
-                    ComboBox0.ValidValues.Remove(i);
-                }
-            }
-            ComboBox0.ValidValues.Add("", "");
-            if (oRS.RecordCount > 0)
-            {
-                for (int i = 0; i < oRS.RecordCount; i++)
-                {
-                    ComboBox0.ValidValues.Add(oRS.Fields.Item(0).Value.ToString(), oRS.Fields.Item(1).Value.ToString());
-                    oRS.MoveNext();
-                }
-            }
-
-
-            strSQL = "SELECT \"U_EXX_VALOR\" FROM \"@BUK_CONF\" WHERE \"Code\" = 'URL_XSJS' ";
+            strSQL = "SELECT * FROM \"@BUK_CONF\" ";
             oRS.DoQuery(strSQL);
 
-            if (oRS.RecordCount > 0)
+            while (!oRS.EoF)
             {
-                for (int i = 0; i < oRS.RecordCount; i++)
+                string code = oRS.Fields.Item("Code").Value.ToString();
+
+                if (code == "URL_ACC")
                 {
-                    URL_XSJS = oRS.Fields.Item(0).Value.ToString();
-                    oRS.MoveNext();
+                    urlBuk = oRS.Fields.Item("U_EXX_VALOR").Value.ToString();
                 }
+                else if (code == "TOK_BUK")
+                {
+                    tokenBuk = oRS.Fields.Item("U_EXX_VALOR").Value.ToString();
+                }
+                else if (code == "URL_SL")
+                {
+                    Globals.ServiceLayerUrl = oRS.Fields.Item("U_EXX_VALOR").Value.ToString();
+                }
+                oRS.MoveNext();
             }
+
+
+            //if (ComboBox0.ValidValues.Count > 1)
+            //{
+            //    for (int i = ComboBox0.ValidValues.Count - 1; i == 0; i--)
+            //    {
+            //        ComboBox0.ValidValues.Remove(i);
+            //    }
+            //}
+            //ComboBox0.ValidValues.Add("", "");
+            //if (oRS.RecordCount > 0)
+            //{
+            //    for (int i = 0; i < oRS.RecordCount; i++)
+            //    {
+            //        ComboBox0.ValidValues.Add(oRS.Fields.Item(0).Value.ToString(), oRS.Fields.Item(1).Value.ToString());
+            //        oRS.MoveNext();
+            //    }
+            //}
+
+
+            //strSQL = "SELECT \"U_EXX_VALOR\" FROM \"@BUK_CONF\" WHERE \"Code\" = 'URL_XSJS' ";
+            //oRS.DoQuery(strSQL);
+
+            //if (oRS.RecordCount > 0)
+            //{
+            //    for (int i = 0; i < oRS.RecordCount; i++)
+            //    {
+            //        URL_XSJS = oRS.Fields.Item(0).Value.ToString();
+            //        oRS.MoveNext();
+            //    }
+            //}
 
         }
 
@@ -110,14 +137,7 @@ namespace Integracion_Buk
 
         #region Eventos
 
-        private void EditText0_PressedAfter(object sboObject, SAPbouiCOM.SBOItemEventArg pVal)
-        {
-            string valorFecha = EditText0.Value.ToString();
-            this.UIAPIRawForm.Mode = SAPbouiCOM.BoFormMode.fm_ADD_MODE;
-            EditText0.Value = valorFecha;
-            //EditText1.Value = "-1";
-            ComboBox0.Select(0, SAPbouiCOM.BoSearchKey.psk_Index);
-        }
+
 
 
 
@@ -125,22 +145,41 @@ namespace Integracion_Buk
         {
             try
             {
-                if (Application.SBO_Application.MessageBox(" Desea crear la centralizacion con la fecha " + EditText0.Value.ToString(), 1, "Sí", "No") == 1)
+                if (Application.SBO_Application.MessageBox("Desea crear la centralizacion con el periodo " + periodoEditText.Value.ToString(), 1, "Sí", "No") == 1)
                 {
-                    if ((EditText0.Value.ToString() != "") && (EditText2.Value.ToString() != ""))
+
+                    SAPbobsCOM.Recordset oRS = ((SAPbobsCOM.Recordset)Program.oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset));
+                    string strSQL = "";
+                    strSQL = "Select IFNULL(\"TaxIdNum\",'') from \"OADM\" ";
+                    oRS.DoQuery(strSQL);
+
+                    String _ruc = oRS.Fields.Item(0).Value.ToString();
+                    if (string.IsNullOrEmpty(_ruc))
+                        throw new Exception("Falta registrar el ruc en la pestaña de datos de contabilidad en el detalle de la sociedad");
+
+                    oRS = null;
+
+                    if ((fechaEditText.Value.ToString() != "") && (periodoEditText.Value.ToString() != ""))
                     {
                         Mensajes.EnviarMensaje("Buscando datos para integrar... " + Program.AddOnName + ".", TipoMensaje.tm_Advertencia, BandejaSalida.bs_MensajeSBOApplication);
 
-                        string valorFecha = EditText0.Value.ToString();
+                        string valorFecha = fechaEditText.Value.ToString();
                         string anio = valorFecha.Substring(0, 4);
                         string mes = valorFecha.Substring(4, 2);
                         string dia = valorFecha.Substring(6, 2);
-                        string rut = EditText2.Value.ToString();
-                        string empresa = ComboBox0.Selected.Value;
+
+                        var _periodo = periodoEditText.Value.Split('-');
+                        //string rut = EditText2.Value.ToString();
+                        //string empresa = ComboBox0.Selected.Value;
+                        //string empresa2 = EditText3.Value.ToString();
                         //Application.SBO_Application.Company.ServerName;
-                        if ((mes != "") && (anio != "") && (rut != ""))
+                        if ((mes != "") && (anio != ""))
                         {
-                            CenterCostProcess(mes, anio, rut, dia);
+
+                            ValidarPeriodoCreado(_periodo[1], _periodo[0]);
+                            CenterCostProcess(_periodo[1], _periodo[0], _ruc, anio + "-" + mes + "-" + dia, "");
+
+
                             /*
                             var url = URL_XSJS+ "/WS/services/documents/addJournalEntriesAPI.xsjs?month=" + mes + "&year=" + anio + "&day=" + dia + "&company_id=" + empresa + "&rut=" + rut;
                             Mensajes.EnviarMensaje("Validando informacion... " + Program.AddOnName + ".", TipoMensaje.tm_Advertencia, BandejaSalida.bs_MensajeSBOApplication);
@@ -173,50 +212,84 @@ namespace Integracion_Buk
                         }
                         else
                         {
-                            Application.SBO_Application.StatusBar.SetText("Faltan dados de fecha, sucursal o rut de sucursal para realizar la centralización", SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Warning);
-                            Application.SBO_Application.MessageBox("Faltan dados de fecha, sucursal o rut de sucursal para realizar la centralización", 1, "OK");
+                            Application.SBO_Application.StatusBar.SetText("Faltan datos de fecha, o de periodo para realizar la centralización", SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Warning);
+                            Application.SBO_Application.MessageBox("Faltan datos de fecha, o de periodo para realizar la centralización", 1, "OK");
                         }
                     }
                     else
                     {
-                        Application.SBO_Application.StatusBar.SetText("Faltan dados de fecha, sucursal o rut de sucursal para realizar la centralización", SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Warning);
-                        Application.SBO_Application.MessageBox("Faltan dados de fecha, sucursal o rut de sucursal para realizar la centralización", 1, "OK");
+                        Application.SBO_Application.StatusBar.SetText("Faltan datos de fecha, o de periodo para realizar la centralización", SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Warning);
+                        Application.SBO_Application.MessageBox("Faltan datos de fecha, o de periodo realizar la centralización", 1, "OK");
                     }
                 }
 
             }
             catch (Exception ex)
             {
+                Application.SBO_Application.MessageBox(ex.Message);
                 Application.SBO_Application.StatusBar.SetText(ex.Message, SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Warning);
-                Application.SBO_Application.StatusBar.SetText(ex.StackTrace, SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Warning);
+                //Application.SBO_Application.StatusBar.SetText(ex.StackTrace, SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Warning);
 
+            }
+            finally
+            {
+                GC.Collect();
             }
 
         }
 
-        private void CenterCostProcess(string month, string year, string rut, string day)
+        private void ValidarPeriodoCreado(string mes, string anio)
         {
             try
             {
-                //var listAccount = GetAccountExport(month, year, rut);
+                SAPbobsCOM.Recordset oRS = ((SAPbobsCOM.Recordset)Program.oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset));
+                string strSQL = "";
+                strSQL = $@"SELECT Count(*) FROM ""OJDT"" 
+                            WHERE ""Memo"" = 'CENTRALIZACION MES {mes}/{anio}'
+                            and ""TransId"" not in(
+                            SELECT ""StornoToTr"" FROM ""OJDT""
+                            where ""StornoToTr"" is not null
+                            and ""Memo"" LIKE '%CENTRALIZACION MES {mes}/{anio}%'
+                             )
+                             ";
+                oRS.DoQuery(strSQL);
 
-                string ruta = "C:\\Log\\mired-contabilidadm.json";
-                string json = File.ReadAllText(ruta);
-                List<Registro> listAccount = new List<Registro>();
-                JObject jsonObject = JObject.Parse(json);
-                var cuenta = jsonObject["data"]["20454814178"];
-                foreach (var item in cuenta)
-                {
+                int count = int.Parse(oRS.Fields.Item(0).Value.ToString());
 
-                    var rootObject = JsonConvert.DeserializeObject<List<Registro>>(item.ToString());
-                    listAccount.AddRange(rootObject);
-                }
-           
+                if (count > 0)
+                    throw new Exception("El periodo " + mes + "/" + anio + " ya se encuentra registrado");
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        private void CenterCostProcess(string month, string year, string rut, string fecha, string empresa)
+        {
+            try
+            {
+                var listAccount = GetAccountExport(month, year, rut);
+
+                //string ruta = "C:\\Log\\mired-contabilidadm.json";
+                //string json = File.ReadAllText(ruta);
+                //List<Registro> listAccount = new List<Registro>();
+                //JObject jsonObject = JObject.Parse(json);
+                //var cuenta = jsonObject["data"]["20454814178"];
+                //foreach (var item in cuenta)
+                //{
+
+                //    var rootObject = JsonConvert.DeserializeObject<List<Registro>>(item.ToString());
+                //    listAccount.AddRange(rootObject);
+                //}
+
 
                 var url = Globals.ServiceLayerUrl + Globals.JournalEntries;
-                ServiceLayerHelper.Connect();
+                ServiceLayerHelper.Connect(empresa);
                 var JournalEntry = new JournalEntrySL();
-                var fullDateSLFormat = year + "-" + month + "-" + day;
+                var fullDateSLFormat = fecha;//year + "-" + month + "-" + day;
 
                 JournalEntry.Memo = "CENTRALIZACION MES " + month + "/" + year;
                 //JournalEntry.BPLID = rut;
@@ -237,7 +310,7 @@ namespace Integracion_Buk
                 var lines = new List<JournalEntrySL.JournalEntryLine>();
                 //Application.SBO_Application.StatusBar.SetText("json " +  JsonConvert.SerializeObject(listAccount.data), SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Warning);
                 var palotes2 = "";
-                palotes2 += "cuenta_de_mayor_codigo_sn|cuenta_asociada|debito|credito";
+                palotes2 += "cuenta_de_mayor_codigo_sn|cuenta_asociada|debito|credito\n";
                 foreach (var registro in listAccount)
                 {
                     var oJournalEntryLines = new JournalEntrySL.JournalEntryLine();
@@ -258,7 +331,7 @@ namespace Integracion_Buk
                                 var account = registro.cuenta_asociada.Replace('-', ' ').Trim();
                                 account = account.Replace(" ", "");
                                 //account = account.Substring(0, account.Length - 2);
-                                oJournalEntryLines.AccountCode = getSYSBYAccount(account);
+                                oJournalEntryLines.AccountCode = getSYSBYAccount(account, empresa);
                                 oJournalEntryLines.ShortName = registro.cuenta_de_mayor_codigo_sn;//"E000" + ultimos8;
 
                             }
@@ -268,12 +341,12 @@ namespace Integracion_Buk
                         else
                         {
 
-                            oJournalEntryLines.AccountCode = getSYSBYAccount(registro.cuenta_de_mayor_codigo_sn.Replace('-', ' '));
+                            oJournalEntryLines.AccountCode = getSYSBYAccount(registro.cuenta_de_mayor_codigo_sn.Replace('-', ' '), empresa);
                         }
                     }
 
-                    
-                    
+
+
 
                     //else
                     //    oJournalEntryLines.AccountCode = "_SYS00000017148";
@@ -283,6 +356,21 @@ namespace Integracion_Buk
 
                     if (!string.IsNullOrEmpty(oJournalEntryLines.AccountCode))
                     {
+
+                        if (!string.IsNullOrEmpty(registro.sede))
+                            oJournalEntryLines.CostingCode = registro.sede;
+
+                        if (!string.IsNullOrEmpty(registro.tipo_paciente))
+                            oJournalEntryLines.CostingCode2 = registro.tipo_paciente;
+
+                        if (!string.IsNullOrEmpty(registro.unidad_de_negocio))
+                            oJournalEntryLines.CostingCode3 = registro.unidad_de_negocio;
+
+                        if (!string.IsNullOrEmpty(registro.centro_de_costo))
+                            oJournalEntryLines.CostingCode4 = registro.centro_de_costo;
+
+
+
                         if (registro.debito != null)
                         {
                             oJournalEntryLines.Debit = registro.debito.Value;
@@ -312,31 +400,34 @@ namespace Integracion_Buk
                 palotes += "AccountCode" + "|" + "Debit" + "|" + "Credit" + "\n ";
                 foreach (var item in JournalEntry.JournalEntryLines)
                 {
-                    palotes += item.AccountCode + "|" + item.Debit + "|" + item.Credit+"\n ";
+                    palotes += item.AccountCode + "|" + item.Debit + "|" + item.Credit + "\n ";
                 }
 
-
+                validarCarpeta();
                 GenerarJson(month, year, jsonBody);
                 GenerarJson2(month, year, palotes);
                 GenerarJson3(month, year, palotes2);
                 //Application.SBO_Application.MessageBox(jsonBody);
-                ServiceLayerHelper.Connect();
+                ServiceLayerHelper.Connect(empresa);
 
                 //Application.SBO_Application.StatusBar.SetText("Asiento  creado", SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Warning);
-                var response = ServiceLayerHelper.PostSL(url, jsonBody);
+                var response = ServiceLayerHelper.PostSL(url, jsonBody, empresa);
 
                 if (response.StatusCode == HttpStatusCode.Created)
                 {
-                    Application.SBO_Application.StatusBar.SetText("Asiento  creado", SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Warning);
-
+                    var asiento = JsonConvert.DeserializeObject<JournalEntrySLResponse>(response.Content);
+                    Application.SBO_Application.StatusBar.SetText("Asiento  Creado ", SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Warning);
+                    Application.SBO_Application.MessageBox("Asiento  Creado " + asiento.JdtNum.ToString());
+                    EditText0.Value = asiento.JdtNum.ToString();
+                    //guardarLog("Asiento  creado", asiento.JdtNum.ToString(), "Ok");
 
                 }
                 else
                 {
                     Application.SBO_Application.StatusBar.SetText("error sl " + response.StatusCode, SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Warning);
                     Application.SBO_Application.StatusBar.SetText("error sl " + response.Content, SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Warning);
-
-
+                    Application.SBO_Application.MessageBox("Error sl " + response.Content);
+                    guardarLog(response.Content, "NoTransID", "Ok");
                 }
 
 
@@ -346,13 +437,33 @@ namespace Integracion_Buk
                 Application.SBO_Application.StatusBar.SetText(ex.StackTrace, SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Error);
                 throw;
             }
+            finally
+            {
+                ServiceLayerHelper.serviceLayerAddress = null;
+                ServiceLayerHelper.sConnectionContext = null;
+            }
         }
         private string pathIndexLog = "C:\\Log";
+        private void validarCarpeta()
+        {
+
+            // Verificar si la carpeta ya existe
+            if (!Directory.Exists(pathIndexLog))
+            {
+                // Crear la carpeta
+                Directory.CreateDirectory(pathIndexLog);
+                Console.WriteLine("Carpeta creada exitosamente.");
+            }
+            else
+            {
+                Console.WriteLine("La carpeta ya existe.");
+            }
+        }
         private void GenerarJson(string month, string year, string json)
         {
             try
             {
-                string rutaArchivo = pathIndexLog + "\\" + year + "-" + month + "-" + "asiento.txt";
+                string rutaArchivo = pathIndexLog + "\\" + year + "-" + month + "-" + DateTime.Now.ToString("yyyyMMdd_HHmm") + "-" + "asiento.txt";
 
 
                 try
@@ -377,7 +488,7 @@ namespace Integracion_Buk
         {
             try
             {
-                string rutaArchivo = pathIndexLog + "\\" + year + "-" + month + "-" + "asiento2.txt";
+                string rutaArchivo = pathIndexLog + "\\" + year + "-" + month + "-" + DateTime.Now.ToString("yyyyMMdd_HHmm") + "-" + "asiento2.txt";
 
 
                 try
@@ -397,12 +508,12 @@ namespace Integracion_Buk
 
                 throw;
             }
-        }  
+        }
         private void GenerarJson3(string month, string year, string json)
         {
             try
             {
-                string rutaArchivo = pathIndexLog + "\\" + year + "-" + month + "-" + "asiento3.txt";
+                string rutaArchivo = pathIndexLog + "\\" + year + "-" + month + "-" + DateTime.Now.ToString("yyyyMMdd_HHmm") + "-" + "asiento3.txt";
 
 
                 try
@@ -424,7 +535,7 @@ namespace Integracion_Buk
             }
         }
         //20454814178
-        private string getSYSBYAccount(string account)
+        private string getSYSBYAccount(string account, string empresa)
         {
             account = account.Replace(" ", "");
             var url = Globals.ServiceLayerUrl + Globals.ChartOfAccounts + "?$filter=FormatCode eq '" + account.Trim() + "'";
@@ -432,7 +543,7 @@ namespace Integracion_Buk
 
             var cuenta = "";
 
-            var response = ServiceLayerHelper.GetSL(url);
+            var response = ServiceLayerHelper.GetSL(url, empresa);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -473,17 +584,18 @@ namespace Integracion_Buk
         private List<Registro> GetAccountExport(string month, string year, string rut)
         {
             List<Registro> listAccount = new List<Registro>();
-            var client = new RestClient("https://mired.buk.pe/api/v1/peru/accounting/export?month=" + month + "&year=" + year + "&company_id=" + rut);
+            var client = new RestClient(urlBuk + "?month=" + month + "&year=" + year + "&company_id=" + rut);
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             client.Timeout = -1;
             var request = new RestRequest(Method.GET);
-            request.AddHeader("auth_token", "PihpLPT6c7UcnkExVTvcBDhs");
+            request.AddHeader("auth_token", tokenBuk);
             IRestResponse response = client.Execute(request);
             if (response.StatusCode == HttpStatusCode.Created)
             {
                 JObject jsonObject = JObject.Parse(response.Content);
-                var cuenta = jsonObject["data"]["20454814178"];//?["Code"]?.ToString();
+                //var cuenta = jsonObject["data"]["20454814178"];//?["Code"]?.ToString();
+                var cuenta = jsonObject["data"][rut];//?["Code"]?.ToString();
 
                 foreach (var item in cuenta)
                 {
@@ -529,15 +641,15 @@ namespace Integracion_Buk
                 oUserTable = Program.oCompany.UserTables.Item("BUK_LOG");
                 //oUserTable.Code = oRecordSet.Fields.Item("NewCode").Value.ToString();
                 //oUserTable.Name = Program.TallasGrupo.Rows[j]["Name"].ToString();//oEditTex2.GetText(i);
-                //if (Error.Length > 250)
-                //    Error = Error.Substring(0, 250);
+                if (Error.Length > 250)
+                    Error = Error.Substring(0, 250);
 
-                oUserTable.Name = EditText0.Value.ToString();
+                oUserTable.Name = fechaEditText.Value.ToString();
                 oUserTable.UserFields.Fields.Item("U_TransId").Value = TransId;
                 //oUserTable.UserFields.Fields.Item("U_MenResp").Value = Error;
                 oUserTable.UserFields.Fields.Item("U_MenErr").Value = Error;
                 //oUserTable.UserFields.Fields.Item("U_MenPayload").Value = Error;
-                oUserTable.UserFields.Fields.Item("U_FecAr").Value = EditText0.Value.ToString();
+                oUserTable.UserFields.Fields.Item("U_FecAr").Value = fechaEditText.Value.ToString();
                 oUserTable.UserFields.Fields.Item("U_EstAr").Value = Estado;
 
                 Respuesta = oUserTable.Add();
@@ -601,16 +713,16 @@ namespace Integracion_Buk
                 //        ostrm.Close();
                 //    }
                 //}
-                if (EditText0.Value.ToString() != "")
+                if (fechaEditText.Value.ToString() != "")
                 {
                     int Mes = 0;
                     int Anho = 0;
                     string MesText = "";
                     string AnhoText = "";
                     //Mes =Convert.ToDateTime(EditText0.Value).Month;
-                    MesText = EditText0.Value.Substring(4, 2);
+                    MesText = fechaEditText.Value.Substring(4, 2);
                     //Anho = Convert.ToDateTime(EditText0.Value).Year;
-                    AnhoText = EditText0.Value.Substring(0, 4);
+                    AnhoText = fechaEditText.Value.Substring(0, 4);
 
 
                     if (ValidaDatoCentralizacionesAnteriores(MesText, AnhoText, Program.oCompany, val, Program.oCompany.CompanyDB) == false)
@@ -678,5 +790,33 @@ namespace Integracion_Buk
 
         private SAPbouiCOM.EditText EditText2;
         private SAPbouiCOM.StaticText StaticText2;
+        private SAPbouiCOM.EditText EditText3;
+        private SAPbouiCOM.StaticText StaticText3;
+        private SAPbouiCOM.StaticText StaticText4;
+        private SAPbouiCOM.EditText periodoEditText;
+
+        private void periodoEditText_ChooseFromListAfter(object sboObject, SAPbouiCOM.SBOItemEventArg pVal)
+        {
+            try
+            {
+                SAPbouiCOM.ISBOChooseFromListEventArg chflarg = (SAPbouiCOM.ISBOChooseFromListEventArg)pVal;
+                string uidChose = chflarg.ChooseFromListUID;
+                Console.WriteLine("ChooseFromListUID:" + uidChose);
+                SAPbouiCOM.DataTable dt = chflarg.SelectedObjects;
+                var val3 = Convert.ToString(dt.GetValue("Code", 0));
+                periodoEditText.Value = val3;
+            }
+            catch (Exception)
+            {
+
+
+            }
+
+        }
+
+        private SAPbouiCOM.EditText fechaEditText;
+        private SAPbouiCOM.EditText EditText0;
+        private SAPbouiCOM.LinkedButton LinkedButton0;
+        private SAPbouiCOM.StaticText StaticText5;
     }
 }

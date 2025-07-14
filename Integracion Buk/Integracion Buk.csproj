@@ -191,6 +191,7 @@
     <Compile Include="Clases\ColaboradorBUK.cs" />
     <Compile Include="Clases\Consultas.cs" />
     <Compile Include="Clases\EstructuraDatos.cs" />
+    <Compile Include="Clases\JournalEntrySLResponse.cs" />
     <Compile Include="Clases\JournalEntrySL.cs" />
     <Compile Include="Clases\Mensajes.cs" />
     <Compile Include="Clases\SLLogin.cs" />

@@ -118,7 +118,11 @@ namespace Integracion_Buk
                 MDCrearCampo("@BUK_LOG", "TransId", "Numero Asiento", SAPbobsCOM.BoFieldTypes.db_Alpha, SAPbobsCOM.BoFldSubTypes.st_None, 20);
                 MDCrearCampo("@BUK_LOG", "MenErr", "Mensaje Error", SAPbobsCOM.BoFieldTypes.db_Alpha, SAPbobsCOM.BoFldSubTypes.st_None, 250);                
                 MDCrearCampo("@BUK_LOG", "FecAr", "Fecha del archivo", SAPbobsCOM.BoFieldTypes.db_Date);
-                MDCrearCampo("@BUK_LOG", "EstAr", "Estado", SAPbobsCOM.BoFieldTypes.db_Alpha, SAPbobsCOM.BoFldSubTypes.st_None, 2); 
+                MDCrearCampo("@BUK_LOG", "EstAr", "Estado", SAPbobsCOM.BoFieldTypes.db_Alpha, SAPbobsCOM.BoFldSubTypes.st_None, 2);
+
+                MDCrearTabla("BUK_CONF", "Configuración BUK", SAPbobsCOM.BoUTBTableType.bott_NoObject);
+                MDCrearCampo("@BUK_CONF", "EXX_VALOR", "Valor", SAPbobsCOM.BoFieldTypes.db_Alpha, SAPbobsCOM.BoFldSubTypes.st_None, 250);
+       
 
                 #endregion Region Crear tablas y campos
 

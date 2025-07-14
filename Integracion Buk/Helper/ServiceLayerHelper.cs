@@ -17,68 +17,74 @@ namespace Integracion_Buk.Helper
         public static string serviceLayerAddress = null;
         public static SLLogin SLLoginResponse;
 
-        public static void Connect()
+        public static void Connect(string bd="")
         {
             try
             {
+
                 //string server = DIExtensions.Company.Server.Replace("NDB@", "").Substring(0, Globals.oCompany.Server.Replace("NDB@", "").IndexOf(":")).Trim();
-                string serviceLayerAddressAux = "https://10.100.80.35:50000/b1s/v1";
+                string serviceLayerAddressAux = Globals.ServiceLayerUrl;//"https://10.100.80.35:50000/b1s/v1";
                 string sConnectionContextAux = null;
 
-                //try
-                //{
-                //    sConnectionContextAux = Application.SBO_Application.Company.GetServiceLayerConnectionContext(serviceLayerAddressAux);
-                //}
-                //catch (System.Exception ex)
-                //{
-                //}
-
-                //if (sConnectionContextAux == null)
-                //    throw new Exception("No se logró establecer conexión con Service Layer");
-
-                ServicePointManager.Expect100Continue = true;
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-
-                var client = new RestClient(serviceLayerAddressAux+"/Login");
-
-
-                client.Timeout = -1;
-                client.RemoteCertificateValidationCallback += (sender, certificate, chain, errors) => true;
-                var request = new RestRequest(Method.POST);
-                request.AddHeader("Content-Type", "application/json");
-
-                var json = @"{ ""CompanyDB"": ""ZZZ_OFTALMO_AQP_06122024"" , ""Password"": ""0000"",""UserName"": ""SISTE02"" }";
-
-                if (!string.IsNullOrEmpty(json))
-                    request.AddParameter("application/json", json, ParameterType.RequestBody);
-                IRestResponse response = client.Execute(request);
-
-                if(response.StatusCode== HttpStatusCode.OK)
+                try
                 {
-                    sConnectionContext = sConnectionContextAux;
-                    serviceLayerAddress = serviceLayerAddressAux;
-                    SLLoginResponse = new SLLogin();
-                    SLLoginResponse.B1SESSION = JObject.Parse(response.Content)["SessionId"].ToString();
+                    sConnectionContextAux = Application.SBO_Application.Company.GetServiceLayerConnectionContext(serviceLayerAddressAux);
                 }
-                else
+                catch (System.Exception ex)
                 {
-                    throw new Exception("No se logró establecer conexión con Service Layer: "+ response.Content);
                 }
 
-            
+                if (sConnectionContextAux == null)
+                    throw new Exception("No se logró establecer conexión con Service Layer");
+
+                //ServicePointManager.Expect100Continue = true;
+                //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
+                //var client = new RestClient(serviceLayerAddressAux+"/Login");
+
+
+                //client.Timeout = -1;
+                //client.RemoteCertificateValidationCallback += (sender, certificate, chain, errors) => true;
+                //var request = new RestRequest(Method.POST);
+                //request.AddHeader("Content-Type", "application/json");
+
+                //var json = "{ \"CompanyDB\": \""+bd+ "\" ,\"Password\": \"5456\",\"UserName\": \"SISTE02\" }";
+
+                //if (!string.IsNullOrEmpty(json))
+                //    request.AddParameter("application/json", json, ParameterType.RequestBody);
+                //IRestResponse response = client.Execute(request);
+                //Application.SBO_Application.StatusBar.SetText(json + response.Content, SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Warning);
+
+                //if (response.StatusCode== HttpStatusCode.OK)
+                //{
+                //    sConnectionContext = sConnectionContextAux;
+                //    serviceLayerAddress = serviceLayerAddressAux;
+                //    SLLoginResponse = new SLLogin();
+                //    SLLoginResponse.B1SESSION = JObject.Parse(response.Content)["SessionId"].ToString();
+                //}
+                //else
+                //{
+                //    throw new Exception("No se logró establecer conexión con Service Layer: "+ response.Content);
+                //}
+
+
+                sConnectionContext = sConnectionContextAux;
+                serviceLayerAddress = serviceLayerAddressAux;
+                SLLoginResponse = new SLLogin();
+                SLLoginResponse.B1SESSION = sConnectionContext.Split(';')[0].Replace("B1SESSION=", "");
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public static IRestResponse PostSL(string url, string body)
+        public static IRestResponse PostSL(string url, string body,string bd="")
         {
             band:
             try
             {
                 if (serviceLayerAddress == null)
-                    Connect();
+                    Connect(bd);
 
 
                 ServicePointManager.Expect100Continue = true;
@@ -118,10 +124,10 @@ namespace Integracion_Buk.Helper
         }
 
 
-        public static IRestResponse GetSL(string url)
+        public static IRestResponse GetSL(string url,string bd)
         {
             if (serviceLayerAddress == null)
-                Connect();
+                Connect(bd);
 
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
@@ -142,10 +148,10 @@ namespace Integracion_Buk.Helper
 
 
 
-        public static IRestResponse PatchSL(string url, string body)
+        public static IRestResponse PatchSL(string url, string body,string bd="")
         {
 
-            if (serviceLayerAddress == null) Connect();
+            if (serviceLayerAddress == null) Connect(bd);
 
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
