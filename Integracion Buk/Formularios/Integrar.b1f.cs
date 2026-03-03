@@ -319,6 +319,7 @@ namespace Integracion_Buk
 
 
                     // Application.SBO_Application.StatusBar.SetText("json " + registro.cuenta_asociada, SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Warning);
+                    //Cuenta 1401245645 - 1401245645 - _SYS100000125
                     if (!string.IsNullOrEmpty(registro.cuenta_de_mayor_codigo_sn))
                     {
                         if (registro.cuenta_de_mayor_codigo_sn.StartsWith("E"))

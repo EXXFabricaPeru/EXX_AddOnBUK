@@ -47,6 +47,7 @@ namespace Integracion_Buk.Formularios
 
 
         private string URL_EMP;
+        private string URL_TOKEN;
         private SAPbouiCOM.StaticText StaticText0;
 
         private void OnCustomInitialize()
@@ -58,24 +59,39 @@ namespace Integracion_Buk.Formularios
                 string strSQL = "";
                 oRS = ((SAPbobsCOM.Recordset)Program.oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset));
 
-                strSQL = "SELECT \"U_EXX_VALOR\" FROM \"@BUK_CONF\" WHERE \"Code\" = 'URL_EMP' ";
+                //strSQL = "SELECT \"U_EXX_VALOR\" FROM \"@BUK_CONF\" WHERE \"Code\" = 'URL_EMP' ";
+
+                strSQL = "SELECT * FROM \"@BUK_CONF\" ";
                 oRS.DoQuery(strSQL);
 
-                if (oRS.RecordCount > 0)
+                //if (oRS.RecordCount > 0)
+                //{
+                //    for (int i = 0; i < oRS.RecordCount; i++)
+                //    {
+                //        URL_EMP = oRS.Fields.Item(0).Value.ToString();
+                //        oRS.MoveNext();
+                //    }
+                //}
+
+                //if (oRS != null)
+                //{
+                //    Marshal.ReleaseComObject(oRS);
+                //    oRS = null;
+                //    GC.Collect();
+                //}
+
+
+                string code = oRS.Fields.Item("Code").Value.ToString();
+
+                if (code == "URL_EMP")
                 {
-                    for (int i = 0; i < oRS.RecordCount; i++)
-                    {
-                        URL_EMP = oRS.Fields.Item(0).Value.ToString();
-                        oRS.MoveNext();
-                    }
+                    URL_EMP = oRS.Fields.Item("U_EXX_VALOR").Value.ToString();
+                }
+                else if (code == "TOK_BUK")
+                {
+                    URL_TOKEN = oRS.Fields.Item("U_EXX_VALOR").Value.ToString();
                 }
 
-                if (oRS != null)
-                {
-                    Marshal.ReleaseComObject(oRS);
-                    oRS = null;
-                    GC.Collect();
-                }
 
                 ConsultarEmpleadosPendientes();
             }
@@ -96,17 +112,24 @@ namespace Integracion_Buk.Formularios
 
         private void ConsultarEmpleadosPendientes()
         {
+
+            SAPbobsCOM.Recordset oRS = ((SAPbobsCOM.Recordset)Program.oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset));
             try
             {
                 var url = URL_EMP;// "https://mired.buk.pe/api/v1/peru/employees"; //URL_XSJS+ "https://10.100.80.7:4300/WS/services/businesspartners/getEmployees.xsjs";
                 employees = new List<ColaboradorBUK.Datum>();
                 //Application.SBO_Application.StatusBar.SetText(url, SAPbouiCOM.BoMessageTime.bmt_Medium, SAPbouiCOM.BoStatusBarMessageType.smt_Warning);
 
+
+               
+
+
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
                 var client = new RestClient(url);
                 var request = new RestRequest(Method.GET);
-                request.AddHeader("auth_token", "PihpLPT6c7UcnkExVTvcBDhs");
+                //request.AddHeader("auth_token", "PihpLPT6c7UcnkExVTvcBDhs");
+                request.AddHeader("auth_token", URL_TOKEN);
                 var response = client.Execute(request);
 
                 //WebRequest request = WebRequest.Create(url);
